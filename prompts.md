@@ -1,5 +1,12 @@
-<!-- Version 1: Created prompt history log for Efe's Duel project -->
+<!-- Version 2: Logged advanced mode update request and latest responses -->
 # Prompt History
+
+## 2. Address turn activation bug and advanced-only layout
+**Prompt:** make these changes:  1) after playing the first player's turn, I was not able to play the second player's turn on the same PC.  THeir cards remained unselectable.  Was this an error, or was something else expected?  2) adjust the layout so that on wide screens, the piste and the playing cards to not get put on a third column to the right, but they stay under the game mode and round tracker.  3) we will only implement advanced mode, remove basic and standard options.
+**Response Summary (gpt-5-codex):**
+- Confirmed the inactive hand issue was unintended and updated turn handling to enable the next player reliably.
+- Reworked the layout grid so the piste and hands always span both columns on large screens and refreshed advanced-mode messaging.
+- Removed basic/standard mode controls in favor of a permanent advanced experience and updated documentation accordingly.
 
 ## 1. Create a webapp for "Efe's Duel!"
 **Prompt:** create a webapp that implements the game described below.  We will call the game "Efe's Duel!"  It will allow for two players on the same computer in the first version.  In a future version, we will use a firebase database to enable multiplayer over the internet where the moves can be stored and read on the firebase db.  Let me know if this is not possible. If it is possible, keep this future development in mind so that we code accordingly as we go forward.
