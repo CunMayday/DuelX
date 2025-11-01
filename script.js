@@ -1,4 +1,4 @@
-// Version 2: Refined gameplay flow, fixed advanced attack handling, and added utility helpers.
+// Version 3: Locked gameplay to advanced mode and ensured turn hand activation updates correctly.
 (() => {
   const BOARD_LENGTH = 23;
   const HAND_SIZE = 5;
@@ -13,13 +13,12 @@
     log: document.getElementById('log'),
     newGameBtn: document.getElementById('new-game-btn'),
     nextRoundBtn: document.getElementById('next-round-btn'),
-    modeRadios: Array.from(document.querySelectorAll('input[name="mode"]')),
     scoreP1: document.getElementById('score-p1'),
     scoreP2: document.getElementById('score-p2')
   };
 
   const gameState = {
-    mode: 'basic',
+    mode: 'advanced',
     round: 1,
     startingPlayer: 0,
     activePlayer: null,
@@ -46,13 +45,6 @@
       }
     });
 
-    elements.modeRadios.forEach((radio) => {
-      radio.addEventListener('change', () => {
-        gameState.mode = getSelectedMode();
-        addLog(`Mode set to ${capitalize(gameState.mode)}.`, 'info');
-      });
-    });
-
     renderAll();
   }
 
@@ -68,11 +60,6 @@
       space.appendChild(index);
       elements.piste.appendChild(space);
     }
-  }
-
-  function getSelectedMode() {
-    const selected = elements.modeRadios.find((radio) => radio.checked);
-    return selected ? selected.value : 'basic';
   }
 
   function startNewMatch() {
@@ -95,7 +82,7 @@
   }
 
   function startRound() {
-    gameState.mode = getSelectedMode();
+    gameState.mode = 'advanced';
     gameState.deck = buildDeck();
     gameState.discard = [];
     gameState.attackContext = null;
@@ -637,24 +624,28 @@
   }
 
   function endPlayerTurn(player) {
-    if (checkNoLegalMoves(opponentOf(player.id).id)) {
-      addLog(`${opponentOf(player.id).name} cannot move. ${player.name} wins the round.`, 'success');
+    const opponent = opponentOf(player.id);
+    if (checkNoLegalMoves(opponent.id)) {
+      addLog(`${opponent.name} cannot move. ${player.name} wins the round.`, 'success');
       concludeRound(player.id);
       return;
     }
 
     drawIfAllowed(player);
-    renderHands();
+
+    const nextPlayerId = opponent.id;
+    gameState.activePlayer = nextPlayerId;
 
     if (gameState.deckExhausted && !gameState.finalAttackPending) {
+      renderHands();
       triggerFinalAttackPhase(player.id);
       return;
     }
 
-    gameState.activePlayer = opponentOf(player.id).id;
     gameState.phase = 'turn';
     updateActionMessage(`${currentPlayer().name}, it's your turn.`);
     renderActionOptions();
+    renderHands();
     renderBoard();
   }
 
@@ -689,6 +680,7 @@
     gameState.finalAttackPending = true;
     gameState.phase = 'final-attack';
     gameState.activePlayer = opponent.id;
+    renderHands();
     renderActionOptions([
       {
         label: 'Pass',
@@ -760,10 +752,6 @@
     entry.className = `log-entry ${level}`;
     entry.textContent = `[Round ${gameState.round}] ${message}`;
     elements.log.prepend(entry);
-  }
-
-  function capitalize(text) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
   init();

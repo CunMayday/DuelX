@@ -1,4 +1,4 @@
-<!-- Version 1: Initial implementation of Efe's Duel web application structure -->
+<!-- Version 2: Streamlined advanced-only UI and reorganized layout structure -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,25 +16,14 @@
   <main class="app-main">
     <section class="mode-panel">
       <h2>Game Mode</h2>
-      <div class="mode-options">
-        <label>
-          <input type="radio" name="mode" value="basic" checked />
-          Basic
-        </label>
-        <label>
-          <input type="radio" name="mode" value="standard" />
-          Standard
-        </label>
-        <label>
-          <input type="radio" name="mode" value="advanced" />
-          Advanced
-        </label>
-      </div>
+      <p class="mode-description">
+        Advanced mode is always active, combining strengthened attacks, parries, retreats, and advance attacks for every match.
+      </p>
       <div class="mode-actions">
         <button id="new-game-btn" type="button">Start New Match</button>
         <button id="next-round-btn" type="button">Start Next Round</button>
       </div>
-      <p class="mode-hint">Switch modes between rounds to explore new rules. Advanced mode builds on standard rules.</p>
+      <p class="mode-hint">Use the controls above to manage rounds while mastering every advanced technique.</p>
     </section>
 
     <section class="scoreboard" aria-live="polite">
@@ -82,28 +71,13 @@
     <section class="rules-summary">
       <h2>Rule Reminders</h2>
       <details open>
-        <summary>Basic Game</summary>
-        <ul>
-          <li>Move exactly the value of the card forward or backward.</li>
-          <li>Cards cannot move a swordsman off the piste or through the opponent.</li>
-          <li>Match the distance to attack. Attacks in Basic mode always hit.</li>
-          <li>A round ends on a hit, no legal moves, or when the deck is exhausted.</li>
-        </ul>
-      </details>
-      <details>
-        <summary>Standard Game</summary>
-        <ul>
-          <li>Attackers may stack identical cards to strengthen an attack.</li>
-          <li>Defenders parry with the same number of cards totaling the attack value.</li>
-          <li>Successful parries require taking a turn before drawing new cards.</li>
-        </ul>
-      </details>
-      <details>
         <summary>Advanced Game</summary>
         <ul>
           <li>Advance &amp; Attack by moving forward with one card, then attacking with another.</li>
           <li>Defenders may parry or retreat when facing an advance &amp; attack.</li>
           <li>Retreating uses a card to move backward; the attacker keeps the initiative.</li>
+          <li>Successful parries force the defender to act before drawing back to five cards.</li>
+          <li>Deck exhaustion triggers a final attack opportunity before determining distance winners.</li>
         </ul>
       </details>
     </section>
