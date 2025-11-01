@@ -1,0 +1,118 @@
+<!-- Version 1: Initial implementation of Efe's Duel web application structure -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Efe's Duel!</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Efe's Duel!</h1>
+    <p class="tagline">A strategic fencing duel for two players.</p>
+  </header>
+
+  <main class="app-main">
+    <section class="mode-panel">
+      <h2>Game Mode</h2>
+      <div class="mode-options">
+        <label>
+          <input type="radio" name="mode" value="basic" checked />
+          Basic
+        </label>
+        <label>
+          <input type="radio" name="mode" value="standard" />
+          Standard
+        </label>
+        <label>
+          <input type="radio" name="mode" value="advanced" />
+          Advanced
+        </label>
+      </div>
+      <div class="mode-actions">
+        <button id="new-game-btn" type="button">Start New Match</button>
+        <button id="next-round-btn" type="button">Start Next Round</button>
+      </div>
+      <p class="mode-hint">Switch modes between rounds to explore new rules. Advanced mode builds on standard rules.</p>
+    </section>
+
+    <section class="scoreboard" aria-live="polite">
+      <h2>Round Tracker</h2>
+      <div class="scores">
+        <div class="score" data-player="0">
+          <h3>Player 1</h3>
+          <div class="marker" id="score-p1"></div>
+        </div>
+        <div class="score" data-player="1">
+          <h3>Player 2</h3>
+          <div class="marker" id="score-p2"></div>
+        </div>
+      </div>
+      <p class="round-info">First player to win five rounds claims victory.</p>
+    </section>
+
+    <section class="board-wrapper">
+      <h2>The Piste</h2>
+      <div id="piste" class="piste" role="grid" aria-label="Fencing piste with 23 spaces"></div>
+    </section>
+
+    <section class="hands-section">
+      <div class="player-zone" data-player="0">
+        <h2>Player 1 Hand</h2>
+        <div class="hand" id="hand-p1" aria-live="polite"></div>
+      </div>
+      <div class="player-zone" data-player="1">
+        <h2>Player 2 Hand</h2>
+        <div class="hand" id="hand-p2" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="action-panel" aria-live="polite">
+      <h2>Turn Controls</h2>
+      <div id="action-message" class="action-message">Press "Start New Match" to begin.</div>
+      <div id="action-options" class="action-options"></div>
+    </section>
+
+    <section class="status-panel" aria-live="polite">
+      <h2>Game Log</h2>
+      <div id="log" class="log"></div>
+    </section>
+
+    <section class="rules-summary">
+      <h2>Rule Reminders</h2>
+      <details open>
+        <summary>Basic Game</summary>
+        <ul>
+          <li>Move exactly the value of the card forward or backward.</li>
+          <li>Cards cannot move a swordsman off the piste or through the opponent.</li>
+          <li>Match the distance to attack. Attacks in Basic mode always hit.</li>
+          <li>A round ends on a hit, no legal moves, or when the deck is exhausted.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Standard Game</summary>
+        <ul>
+          <li>Attackers may stack identical cards to strengthen an attack.</li>
+          <li>Defenders parry with the same number of cards totaling the attack value.</li>
+          <li>Successful parries require taking a turn before drawing new cards.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Advanced Game</summary>
+        <ul>
+          <li>Advance &amp; Attack by moving forward with one card, then attacking with another.</li>
+          <li>Defenders may parry or retreat when facing an advance &amp; attack.</li>
+          <li>Retreating uses a card to move backward; the attacker keeps the initiative.</li>
+        </ul>
+      </details>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>&copy; 2024 Efe's Duel!</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
